@@ -1,0 +1,803 @@
+Crossplatform JS  
+Develop backend services also called API
+services in Server, Cloud 
+Great for prototying and agile development
+
+Architecture
+------------
+run time env for running JS 
+Rayn Dahl takes google v8 engine + c++ proram to make node exe
+node =! c# , bcs it is not a programming language
+node != asp.net, rails, django bcs it is not a framework
+
+How it works
+-------------
+Asynchronous, non-blocking
+single thread, multiple request
+Node is asynch by default, In node we have single thread to serve all the request
+EventQueue .Node is continously montinoring the event queue in background.
+This kind of architecture is good for I/O intensove apps
+Dont use it for CPU-intensive apps.like video encoding or a image manuplation services bcs it a single thread
+It should be used for data intensive and real time application
+In node we dont have window, document objects
+
+Node Module System
+-------------------
+--------------------
+Core modules will be discussing here is os, fs, events, http
+
+
+Global Objects
+---------------
+Some of global objects in js are 
+Console.log();
+setTimeout();
+setInterval();
+clearInterval();
+
+In browser we have window likewise in node js we have global.console.log()
+
+Modules
+-------
+if we not modules or modularity to the it will overwrite and confuse
+So always keep the modularity by adding modules
+Every file in a node is considered as module .Every fun and variable is scope to that module
+This is not available to other modules or files unless we load it.
+Every project has main file and main module
+In node every file is a module, so the variable, function are scoped to that file i.e, that module
+
+Create a module
+------------------------
+module.export.name = var;
+module.export.endpoint = function;
+
+Loading a module
+-------------- 
+var loggr = require('./logger')
+loggr.endpoint()
+make the module import in const identifier, var can make the it overwrite
+const loggr = require('./logger')
+
+The tools like jshint can find those errors
+if you are planning to export only a single function you can do like this 
+module.export = function;
+
+in app.js
+const log = require('logger')
+
+Module wrapper function
+-----------------------
+node is not straightly running the code, it is putting in to a function called as Module wrapper function
+something like (function(exports, require, module, __filename, __dirname){
+})
+
+path module
+-----------
+const path = require('path')
+path.parse(__filename)
+
+OS module
+----------
+const os = require('os')
+os.freemem()
+os.uptime()
+
+File module
+------------
+f.readdir('./', function(err,files)
+{
+ if(err)
+
+}
+Always prefer to use asyn methods
+
+Event Module
+-------------
+Lot of node is based on event
+A signal that something had happen
+
+const EventEmitter = require('events')
+const emitter = new EventEmitter();
+
+//Register a listen
+emitter.on("MessageLogged", function(){
+console.log("Listener called");
+})
+//Raised an event
+emitter.emit('MessageLogged');
+
+
+
+Event Arguments
+---------------
+emitter.emit('MessageLogged', 1,url);
+
+best practise is to create an object and send
+
+//Register a listen
+emitter.on("MessageLogged", function(arg){
+console.log("Listener called", arg);
+})
+
+emitter.emit('MessageLogged',{id:1,url:'http://fdfsdfs'})
+
+in ES we can use arrow functions
+
+//Register a listen
+emitter.on("MessageLogged", (arg)=>{
+console.log("Listener called", arg);
+})
+
+Extending Event Emitter
+-----------------------
+Clss extention of EventEmitter class and send the class to another module and get the reister
+
+HTTP module
+------------
+HTTP module 
+
+const http = require('http')
+const server = http.createServer()
+This server has all eventemitter quality
+
+server.listen(3000)
+add a event handler or listner
+
+server.on('connection',(socket)=>{
+
+console.log("New connection...");
+});
+
+again rewrite
+
+const server = http.createServer((req,res)=>{
+if(req.url === '/')
+{
+  res.write('Hello world');
+  res.end();
+}
+
+if(req.url === '/api/courses')
+{
+  res.write(JSON.stringfy([1,2,3]));
+  res.end();
+}
+
+}
+
+Node Package Manager
+---------------------
+
+
+Package.JSON
+------------
+
+Building Restful API's using Express
+=====================================
+
+Introduction
+-------------
+Express framework helps in routing, else in the http we need too write ore of statement
+
+RESTful services
+----------------
+Server  - Client(communiction through http protocol)
+
+Representation State Transfer
+
+CRUD operations - Create, 
+The end point 
+The address can start with http / https
+then domain, api , 
+
+HTTP method GET- (getdata), PUT - (putdata), POST - (postdata), DELETE - (deletedata)
+
+GET request can be /api/customers - response { {},{}} collections
+If need  a single customer /api/customers/id - response {}
+PUT /api/customers/1
+DELETE /api/customers/1
+POST /api/customers
+
+Introducing Express
+--------------------
+Install the express after npm init by npm i Express
+
+First web driver
+-----------------
+const express = require('express')
+const app = express();
+
+app.get(), app.put(), app.post(), app.post()
+
+app.get('/', (req,res)=>{});
+
+app.listen(3000,()=> console.log("Listening on port 3000"))
+
+Nodemon
+--------
+
+
+Environment Variables
+---------------------
+The port is not always the same in the production, this needs to keep in variables
+
+Through process object 
+
+const port  = process.env.PORT || 3000
+
+
+Route parameters
+-----------------
+app.get('api/cources/:id', (req,res)=>{
+res.send(req.param.id);
+
+multiple parameter in the route
+
+app.get('api/poste/:year/:month', (req, res)=>{
+res.send(req.param);
+
+query string paramterapi/posts/2018/1
+req.query
+
+Handling HTTP GET request
+-------------------------
+app.get('api/courses/:id', (req,res)=>{
+const course = course.find(c=> c.id === req.param.id)
+
+if(!course) res.status(404).send('No course found')
+
+Handling HTTP POST request
+--------------------------
+app.post('api/courses/', (req,res)=>
+{
+  const course = {id:courses.length + 1, 
+  name:req.body.name
+};
+courses.push(course);
+res.send(course);
+
+
+Calling Endpoint Using
+----------------------
+How to respond to a http post request
+
+Adding a piece of middleware
+app.use(express.json())
+
+
+app.post('api/courses', (req,res)=>{
+
+const coursev={
+
+id: coursed.length+1,
+name: req.body.name
+};
+courses.push(course);
+res.send(course);
+}
+
+Invalid input
+-------------
+
+if(!req.body.name || req.body.name.length < 3)
+// 400 Bad request
+res.status(400).send("Name is required and should bemin 3");
+
+joi
+
+
+const Joi = require('joi');  // Return is a class .So pascal naming
+
+First define a schema(defines shape of an object, what it contains, length, )
+
+const schema = { name: Joi.string().min(3).required()};
+const result = Joi.validate(req.body, schema);
+if(result.error)
+{
+  res.status(400).send(result.error.details[0].message);
+}
+
+Handling HTTP PUT request
+-------------------------
+app.put('/api/courses/:id', (req,res) => {
+//Look up the course
+
+object destructuring
+
+
+Handling DELETE reques
+
+
+
+
+Advanced Topic
+==============
+Middleware, Configuration, Debugging and Templating Engines
+
+Middleware
+---------
+Get an req object then either pass a response to client or pass cntrl to other middleware function
+The route handle function in express is a middleware function (req, res) => {res.send('Hello World')}
+
+another one is express.json() this return a middleware function.The job of the middleware function is read the request, if it found JSON in body it will parse the body
+ of the request and then it will set req.body property
+
+
+When a req comes to a server it will take =>(Request processing pipeline) .In this pipeline we have one or more middleware functions
+ 
+
+Req =====> json()=>route()========>Response
+Also we can make custom midddle ware functions, like login,authentication, autherization
+Every request we get in server will go through  middleware functions
+Express framework is actually the a bunch of moddleware functions
+
+
+Create a custom middleware function
+-----------------------------------
+app.use(function (req,res,next){
+console.log('Logging ....')
+next()
+}
+
+app.use(function (req,res,next){
+console.log('Autherization ....')
+next()
+}
+
+Middleware functions are called in sequence, including the route function
+Also if we dont pass the seqiuence cntrl the app will hange there
+
+When you make middleware function creates in another file
+
+in logger.js
+
+function (req,res,next)
+{
+ console.log('Logging ....')
+ next()
+}
+
+module.exports = log;
+
+In index.js
+
+const logger = require('./logger')
+app.use(logger)
+
+
+Built in middleware
+-------------------
+Other middleware fuctions are 
+
+app.use(express.urlencoded()); //key=value
+
+app.use(express.static('public')) In the public folder , there is a readme
+
+3rd party middleware
+--------------------
+Many 3rd party middlewares are there.
+
+var helmet = require('helmet');
+
+app.use(helmet)
+
+morgan middleware helps in logging the req
+
+app.use(morgan(tiny'));
+
+Environments
+------------
+In which environmen the code is running.
+Development or production
+
+process.env.NODE_ENV // Dev, testing, staging or production
+app.get('env').If the env is not set, it returns development
+In this demo need to enable the logging of http req(morgan), only when development machine)
+
+if(app.gte('env') === 'development')
+ app.use(morgan('tiny'))
+
+
+Configuration
+-------------
+How to set configuration settings in each enviroment and overwrite them in each environment
+
+npm rc
+npm config
+
+Create a folder config
+  under that default.json, development.json, production
+
+in index.js
+
+const config = require('config')
+
+config.get('name')
+config.get('mail.host')
+
+You shouldnt keep the passwords in config file
+export app_password=1234
+In config older create a file custom-environment-variables.json
+
+mapping of environment variables
+{
+"mail" : { 
+"password":"app_password"
+}
+}
+
+In index.js
+config.gt(mail.password())
+
+Debugging
+---------
+console.log() is a friend for JS developers, After debug mostly we dont require
+We have to delete.This a tedious process.There is a npm pacjke for console logs
+
+With pckage we set the debug through  an env variable 
+
+startupDebugger = require('debug')('app:startup');
+dbdebugger = require('debug')('app:db');
+startupDebugger ("Morgan enabled") same as debug.console()
+dbdebugger ("connected db") 
+
+
+This can read from environmental variable not a config password
+
+
+Templating Engines
+------------------
+All these times we are sending the JSON as resonse, sometimes we need to send the html response 
+thats were tempating engine comes
+
+
+pug, mustache, EJS
+
+different syntax to send rsp to client
+
+Install pug,
+
+app.set('view engine', 'pug');
+app.set('views', './views') = put all the views pages in view folder
+add in .pug file
+
+A new syntax is .pug .
+
+Structuring the Express application
+------------------------------------
+
+Properly structure 
+All the routes related with courses should be in courses.js
+All the routes related with 
+Add a folder routes > courses.js 
+
+In courses.js
+const express = require('express')
+const router = express.Router();
+
+
+router.get('api/courses', (req, res) => {
+res.send(courses);
+}
+
+module.export = router;
+
+In index.js
+
+const courses = require('./routes/courses');
+app.use('/api/courses', courses)
+app.use('/api/courses', home)
+
+
+Asynchronous JS
+----------------
+
+Synchronous vs Asynchronous
+----------------------------
+console.log() = synchronous function
+
+setTimeout(() => {
+console.log('Reading a user');
+}, 2000);
+
+Asynchronous doent mean concurrent or multithreaded
+It is single thread
+
+Patterns  for dealing with asychronous
+---------------------------------------
+console.log('Before')
+const user = getUser(1)
+console.log('After')
+
+
+
+function getUser(id)
+{
+
+ setTimeout(()=> {
+  console.log("Reading a user from a db..")
+  return { id: id, githubser: 'sachin'};}, 2000);
+}
+ 
+Ans :
+ Before 
+ undefined 
+ After 
+
+To solve this problem
+3 methods
+1.Call back
+2.Promises
+3.Async/await
+
+
+Callbacks
+---------
+Change signature
+
+
+console.log('Before')
+const user = getUser(1, function(user){
+console.log('User', user);
+});
+console.log('After')
+
+
+function getUser(id, callback)
+{
+
+ setTimeout(()=> {
+  console.log("Reading a user from a db..")
+  callback( { id: id, githubser: 'sachin'});
+}, 2000);
+}
+Also can be 
+console.log('Before')
+const user = getUser(1, (user) =>{
+console.log('User', user);
+});
+console.log('After')
+
+Callback hell
+--------------
+In real world case :
+It will be nested asyn functions
+const user = getUser(1, (user) =>{
+   getRepositories(user.gitHubUsernam,(repos) =>{
+       getCommits(repo, (commits) => {
+});
+
+});
+
+These nested callback is very hard to read.In real time application it will be
+worse.This is referred as callback hell
+
+Christmas tree problem
+
+Named function to rescue
+------------------------
+The technique is replace ananonymous function to name function.
+The last parameter of function is called the anaonymous function
+Start from the deepest level, after creating place the name in the place of anaonymous
+Create separate functions for that towards the top of hierarchy
+
+There is better way i.e, promises
+
+Promises
+--------
+Extremely powerful when dealing with JS anynchronous
+
+Promise is an obj whoch holds eventual results of an asynchronous operation
+When an aynchrous operation is complete it has a result or error
+It promises you it will give result of asynchronous operation
+It has many states.
+When it creates it has pending state(kick of an synch operation
+then fulfilled(result) and Rejected(error) states
+//promise obj
+#promise
+const p = new Promise(function(resolve, reject)
+{
+  //Kick off some asyn work
+  // asnc completes we have value or error
+  //If there is a value we need to return to the consumers of this promise
+  resolve(value) // through this it send value to the consumer of this promise pending => fulfilled
+  reject(value)  // through this it send error to the consumer of this promise pending => rejected
+});
+
+How to consume the promise
+# consuming
+p.then(result => console.log('Result' result)
+p.catch( err=> console.log('Error', err)
+
+Replace call back with promise
+------------------------------
+function getRepositories(username)
+{
+   return new promise(resolve, reject) =>
+   {
+       setTimeout(()=> {
+       console.log('Calling Github API ....')
+       resolve(['repo1', 'repo2', 'repo3']);
+       }, 2000);
+   }
+}
+
+
+
+Consuming promises
+------------------
+const p = getRepositories("sachin");
+p.then(repos => console.log(repos))
+
+
+getUser(1)
+   .then(user => getRepositories(user.gitUsername))
+   .then(repos => getCommits(repos[0])
+   .then(commits => console.log('Commits', commits));
+   .catch(err => console.log('Error', err.message));
+
+Creating Settled Promise
+------------------------
+
+
+Running parallel Promises
+------------------------
+const p1 = new Promise((resolve, reject) => {
+
+setTimeout(() => {
+
+   console.log('Async operation 1 ...');
+   resolve(1);
+}, 2000);
+});
+
+
+const p1 = new Promise((resolve, reject) => {
+
+setTimeout(() => {
+
+   console.log('Async operation 2 ...');
+   resolve(1);
+}, 2000);
+});
+
+Promise.all([p1, p2])
+   .then(result => console.log(result));
+
+
+If any of the request is complete
+Promise.race([p1,p2])
+    .then(result => console.log());
+
+
+Async and Await
+----------------
+Just like c#
+
+const user = await getUser(1);
+const repos = await getRepositories(user.githubUsername);
+const commits = await getCommits(repos[0]);
+console.log(commits);
+ 
+Whenever you have a fun call with await u need to decorate with async call
+
+async function displayCommits()
+{
+const user = await getUser(1);
+const repos = await getRepositories(user.githubUsername);
+const commits = await getCommits(repos[0]);
+console.log(commits);
+}
+
+Async and await built on top of promise.This look like a synchronous operation
+Use try catch method to get error's in async and await
+
+1.Event logging - 
+2.Calibration - 
+3.Software type -
+4.Meta data - 
+5.basic new ldr application  
+
+
+Alethea road map:
+python flask - web server(easier) 
+Analytics , Data science - 
+kubernetes(Deploy the application) -  Deveops , automation
+Test & Measurement -
+
+MQTT -  Message Queues
+kubernete 
+Cloud deployment 
+
+CPU and memeory
+
+API(Application Programming Interface)
+--------------------------------------
+Weather application and email sign up web application
+We can use a weather data service .Through a weather service we can tap the data and use it
+in our apps.
+
+In tinder where we getting th shared intrest .Here tinder ask facebook server.Through fb api.
+Murder map.
+An api is a set of commands, functions, protocols and objects that progms can
+use to create a software or interact with an external system
+
+Its like a restaurant menu.It is a contract btw a data provider and developer
+Similar like a jquery for JS
+
+
+             request
+Your server <=========>someone elses server
+             response
+
+
+API Endpoint, Paths and Paramters
+----------------------------------
+
+Endpoints: Endpoint is the entry for the server gg: https://api.kanya.rest
+Paths: Endpoint/paths  Paths are predefined and planned in the restful api definition
+Paramters: Parameters are not predefined it comes Endoint?contains=paramter-query
+
+eg:Endpoint/Programming?blacklistFlags=nsfw&type=single&contains=debugging
+If more than one query, The first query follows a ? and Every subsequent query follows an &
+
+Through the paths and parameters we are able to narrow down the data
+
+API authentication and postman
+------------------------------
+Sign in to the openweathermap.org , then get the app id from the API key
+Then use the api url and see 
+Check the path and parameters
+Add new paramters like & units=metric
+
+Very difficut to add the parameter in browser.Then use the tool called postman
+
+JSON
+----
+Javascript Object Notation
+Data from apis can be taken in JSON format, 
+Many other data formats are there like XML, HTML etc 
+JSON is much litter weight and easilty convertable to js object
+
+JSON viewer awesome
+
+GET request with Node http module
+---------------------------------
+
+To communicate our express server with other server , there is a request module.But it is depreciated 
+There is a standard library called Http
+const express = require("express");
+const app = express();
+const https = require("https");
+
+
+app.get("/", function (req, res) {
+  const url =
+    "https://api.openweathermap.org/data/2.5/weather?q=London&appid=fd7959f88641532cfeb5d0fa99f17410";
+  https.get(url, function (response) {
+    console.log(response);
+  });
+  res.send("Server is up and running");
+});
+
+
+How to parse JSON
+-----------------
+The below event gets the data from the response payload
+response.on("data" function(data)
+{
+})
+It in the hex decimal, this can be converted to js object
+const weatherData = JSON.parse(data)
+
+We can reverse the js object to string by 
+
+const object = {
+name:"Sachin",
+favFood = "Biryani"
+}
+JSON.stringfy(object)
+
+
+Using express to render a website with Live API data
+----------------------------------------------------

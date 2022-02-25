@@ -1,0 +1,460 @@
+Python every single thing is considered as an object.int,string,list,tuple are all consider as ojects.
+Objects we can refer it into a containers/variables.eg name = "sachin",List = ["ham",1,[10,12],(12,"sachin"),{command1:"value1",command2:"value2"}
+Python is an interpreter.It will interpret each line by line,when an object is manuplated and give the result.While writing the code we can display this through by "print" method.(Interpretation and print are 2 different methods)
+Many inbuilt methods are defined by python for each objects.
+String:Many methods are defined by python for string objects maninly lstrip("char"),rstrip("char"),strip("char"),split("delimiter",no_of_liness),ljust("char"),rjust("char"),center("char"),replace("existing","new"),caplitalize(),swapcase(),lower(),upper().
+User can concatenate multiple strings Trio = "Messi" + "Suarez" + "Neymaar"
+List(Mutable,sliceable,nestable):Many methods are defined by python for list objects mainly append(x),insert(i,x),remove(x),pop([i]),clear(),index(x),count(x),sort(),reverse(),del
+Another important concept of list is list comphrension,user can create a list by [x for x in range(10) if x%2 == 0] -->[2,4,6,8].Also user can concatenate multiple list into one eg: Trio = ["Messi",28] + ["Suarez",30] + ["Neymaar",23];Trio = ["Messi",28,"Suarez",30,"Neymaar",23]
+Tuples(Immutable,sliceable,nestable)
+important concept of tuple is sequence unpacking eg, Trio = ("Messi","Suarez","Neymaar"): M,S,N = Trio
+ Dictionary:Another import object of python is dictionary.Each dictionary item consist of a key and value.With key we can access value.
+Trio = {"Messi":28,"Suarez":31,"Neymaar":23}.Many builtin methods are defined for dictionary objects most commonly used are Trio.values(),Trio.keys(),Trio.items().Above method will return a list.Key and value inserted in a tuple kept in a list can be converted in to a dictionary.Convert a dict into a list and tuple will give respective keys inserted.Can concatenate multiple dictionary into one.
+Other dict methods are dict[key],dict[key]=value,del dict[key],key in dict,key not in dict,iter(dict),dict.clear(),dict.pop(key),
+Functions in module:It is a piece of code that do a particular task in one python script.For that user need to define the function.While define function user can pass some parameters and returns a value from function.Once function is defined user can call this function any where from the script by passing parameters. 
+eg: def fun_name(par1,par2):
+        logic
+	return 
+Modules in python : Modules are some built in class or functions of some domain.By accessing that module we can create that fuction.User can access different module by just import "module"
+Import module in python are :os,subprocess,multiprocessing,socket,struct,SimpleHTTPserver,scapy
+CALCULUS ANALYSIS THINGS THAT CHANGE.
+Socket:
+Socket programming is for server-client communication.Basically ports are the interfaces of transport protocol.On server and Client side u have to create socket of ports i.e,InterProcessCommunication(IPC) all over the n/w 
+When u create a Socket in server u can create either in TCP/UDP,then bind a port and ipaddress to it.Then listen to various client by accept method
+TCP_port = server.server(server.AF_INET,server.SOCK_STREAM);TCP_PORT.bind((127.0.0.1,5656));TCP_PORT
+class Person:
+
+    def __init__(self, first, last):
+        self.firstname = first
+        self.lastname = last
+
+    def Name(self):
+        return self.firstname + " " + self.lastname
+
+class Employee(Person):
+
+    def __init__(self, first, last, staffnum):
+        Person.__init__(self,first, last)
+        self.staffnumber = staffnum
+
+    def GetEmployee(self):
+        return self.Name() + ", " +  self.staffnumber
+
+x = Person("Marge", "Simpson")
+y = Employee("Homer", "Simpson", "1007")
+
+print(x.Name())
+print(y.GetEmployee()
+---------------------------------------------------------------------------
+class Person:
+
+    def __init__(self, first, last):
+        self.firstname = first
+        self.lastname = last
+
+    def __str__(self):
+        return self.firstname + " " + self.lastname
+
+class Employee(Person):
+
+    def __init__(self, first, last, staffnum):
+        super().__init__(first, last)
+        self.staffnumber = staffnum
+
+
+x = Person("Marge", "Simpson")
+y = Employee("Homer", "Simpson", "1007")
+
+print(x)
+print(y)
+
+
+super(Employee, self).__init__(first, last, age)" which still works in Python3 and is compatible with Python2.
+
+
+C++
+___
+The address of a value in the c++ can be found by &value 
+
+int * name
+
+name = &"messi" 
+
+int trio_Age = {27,39,24}
+trio_Age[0] = 27
+trio_Age = address of 0th index
+(trio_Age+2)
+(trio_Age+1)
+
+Pass by value in a function is passing the a variable value as argument and pass by reference to a function is passing a pointer as argument 
+
+Pointers in c++
+
+int a = 5;
+int * p = &a;
+P is a variable 
+* means its a special variable contains an address
+
+Structure in c++
+================
+When a different kind of data types needed to pack together struct of c++ helps
+
+struct trioDetails{
+string trioNames;
+int totalGoals;
+bool isGreatest;
+} barcelona;
+
+trioDetails barcelona = {{"messi","Suarez","Neymaar"},160,true}
+
+student realMadrid;
+realMadrid.trioNames = {"CR7","bale","benzemma"}
+realMadrid.totalGoals =98;
+realMadrid.isGreates = false;
+
+Arrow Operator with Pointers to Access Structure Members 
+--------------------------------------------------------
+trioDetails barcelona;
+trioDetails *barcelonaptr;
+
+student barcelona = {{"messi","Suarez","Neymaar"},160,true} 
+
+barcelonaptr = &barcelona
+
+barcelonaptr->trioNames gives <{"messi","Suarez","Neymaar"}>
+barcelonaptr->totalGoals gives <97>
+
+Pass structure value and pointer to a function
+----------------------------------------------
+
+display(barcelona);
+show(&barcelona);
+
+void display(trioDetais team)
+{
+if u change any variables of trioDetails(struct) here it won't refelect in main structure
+}
+
+void show(trioDetais *team)
+{
+
+if u change any variables of trioDetails(struct) here it will  refelect in main structure because its a pointer that points to an address
+}
+
+Nested structure in  c++ accessing with dot and arrow operators
+---------------------------------------------------------------
+struct trioDetails{
+string trioNames;
+int totalGoals;
+bool isGreatest;
+nationalDetail argentina
+}
+
+struct nationalDetail{
+string location;
+int pos;
+}
+
+trioDetails barcelona;
+barcelona.argentina.pos = "midfield";
++++++++++++++++++++++++++++++++++++++++++++++++++
+
+barcelonaptr = &barcelona ;
+
+struct trioDetails{
+string trioNames;
+int totalGoals;
+bool isGreatest;
+nationalDetail *brazilptr
+}
+
+struct nationalDetail{
+string location;
+int pos;
+}
+
+brazil = & {"rio","Striker"};
+
+
+barcelonaptr->totalGoals = 10;
+barcelonaptr ->brazilptr ->pos
+
+
+
+Dynamic memory allocation of c++
+--------------------------------
+allocate and delocate the memory
+
+new is for allocate the memory and delete for deallocate the memory
+
+During the compiling we dont know whats the memory of each variable and functions
+
+new keyword will return the address of a pointer
+
+/*
+
+int *pointer;
+pointer = new int   //The c++ will allocate a memory from the heap to store an int value.the address returned will be stored in "pointer"
+* pointer = 24;
+cout << * pointer;
+delete pointer;
+//Basically a pointer will get an address location from the heap in advance by new keyword and use it and delete it whenever not needed
+
+*/
+
+
+How to allocate memory dynamically depends on user input and how to allocate the arrays dynamically:
+--------------------------------------------------------------------
+
+When there are multiple user inputs we can allocate the memory by an array data type 
+
+int *pointer = NULL;
+pointer = new int[arraylength];
+
+for(int cnt = 0; cnt < arraylength; cnt++)
+{
+  cin >> userValue;
+  *(pointer+counter) = userValue 
+}
+
+delete []pointer;
+
+Dangling pointers in c++ : when a memory is allocated by dynamic memory allocation by new keyword after the use we will delete the memory by referingthe pointer that is called dangling 
+
+Function overloading
+---------------------
+The function with same name and return type ,but with different parameters
+Needed in some application where certain type of output to envoked with different parameters
+
+return type and name should be same but parameters total number and type should be different
+
+Memory management in the c++
+----------------------------
+Data segment-> Saves the variables of code ,Code segment -> lines of code
+Data segment has stack,heap and data section
+Data segment 
+
+
+Object Oriented Programming
+============================
+OOPs is a way of thinking or approach
+Machine Learning,Assembly Language,Procedure programming
+In the procedure(structural) programming emphasis was on the functionality not in data.
+Custumer real care for data.
+
+Classes in c++
+--------------
+
+In a class you have 2 this membersdata/attributes and member functions(function)/behaviour
+
+Object: refers to the real world object.So it is easy to relate code with the real time world.
+
+Class: is a specification,plan or a template of an object or blue print.The object uses this class to get the behaviour
+
+Abstraction: Taking the necessity items and ignoring the rest.Things that are relevant to the class.While creating the class what are all the relevant things are called is abstraction
+Also sometime if you need a relevant function/classes from already defined ,you use it .It is also called the abstraction.
+
+Encapsulation:Securing your data's by member function.Protection of the data.If you want change data of class ,it will be through data men .Use the access specifier and protect your data/attribute.Also make the behaviour/functionality to the public access specifier.Now the functionality becomes the interface to access the data.
+
+Inheritence:Child object can use the property of the parent objects.In real world object works in relationship.Relationship is simulated by the inheritance property.Its the reusability with extensibility.
+One obj inheritence of other object and extends his functions and datas
+
+Polymorphism:
+Same functions applied on different object due to different results
+
+Constructors initialize the data members  and return type is the object 
+object usually has a return called "this"
+
+Thought we didn't add any constructor parameters it will take  some garbage value.
+
+Memory management for a class
+
+Memory of program is divided in to code segment and data segment 
+The function members of the class go to the  code segment,
+the variable members go to the data segment.
+
+the object initialized will go to the stack of the memory
+if object initialized is through dynamically then it goes to the heap but the pointer variable still in the stack.
+
+Dynamic object creation in the c++
+==================================
+
+Class FCTeam
+{
+private:
+
+int playerNumber;
+int Age ;
+
+public:
+FCTeam(int No,int Age)
+{
+  playerNumber = No;
+  Age = Age;
+}
+Display()
+{
+cout << playerNumber << "+" << Age;
+}
+
+}
+
+FCTeam Barcelona(11,29);
+Barcelona.Display();
+
+the object Bacelona return type is this.Its an inside implementation."this"is a like FCTeam *const this
+
+So when object Barcelona(11,29) initialized 
+this->playerNumber = 11;
+this->Age = 29;
+
+How to create a dynamic Object:
+
+FCteam *Barcelona = new FCTeam(11,29);
+Barcelona -> Display();
+
+How the object and class stored in memory while running:
+
+
+FCTeam Barcelona(11,29);
+Data Segment                              Code Segment
+Stack =11,29(2 bytes) stored here   Member function will be saved
+Heap = 
+Data section = Local variables,global variables
+
+FCteam *Barcelona = new FCTeam(11,29);
+Data Segment                              Code Segment
+Stack =   Barcelona (starting address of 11(say 1000)
+Heap = 11,29(2 bytes) stored here
+Data section = Local variables,global variables
+
+
+
+
+variables are names for a piece of memory that can be used to store information
+ Memory is organized into sequential units called memory addresses (or addresses for short)
+smallest addressable unit of memory is known as a byte
+
+
+
+Defining a bit flag
+-------------------
+// Define 8 separate bit flags (these can represent whatever you want)
+const unsigned char option0 = 1 << 0; // 0000 0001 
+const unsigned char option1 = 1 << 1; // 0000 0010
+const unsigned char option2 = 1 << 2; // 0000 0100
+const unsigned char option3 = 1 << 3; // 0000 1000
+const unsigned char option4 = 1 << 4; // 0001 0000
+const unsigned char option5 = 1 << 5; // 0010 0000
+const unsigned char option6 = 1 << 6; // 0100 0000
+const unsigned char option7 = 1 << 7; // 1000 0000 
+
+unsigned char myflags = 0; // all bits turned off to start
+turning bit on
+myflags |= option4; // turn option 4 on
+
+myflags |= (option4 | option5); // turn options 4 and 5 on at the same time
+turning bit off
+myflags &= ~option4; // turn option 4 off
+	
+myflagsm  &= ~(option4 | option5); // turn options 4 and 5 off at the same time
+
+toggle a bit
+myflags ^= option4; // flip option4 from on to off, or vice versa
+
+9 bytes (8 bytes to define the bit flag options, and 1 bytes for the bit flag)
+
+Multi files
+Nameingconflicts ->namespace come into picture
+
+As programs grow larger and larger (and include more files), it becomes increasingly tedious to have to forward declare every function you want to use that lives in a different file. Wouldn’t it be nice if you could put all your declarations in one place
+header files,header guard
+
+Preprocessor runs just before the ompiler runs .It simply scan the code top to bottom.
+It looks for the directives.
+include directive
+#include <filename> tells the preprocessor to look for the file in a special place defined by the operating system where header files for the C++ runtime library are held.
+#include "filename" tells the preprocessor to look for the file in the directory containing the source file doing the #include.
+macro defines
+The #define directive can be used to create a macro. A macro is a rule that defines how an input sequence (e.g. an identifier) is converted into a replacement output sequence 
+The conditional compilation preprocessor directives allow you to specify under what conditions something will or won’t compile. The only conditional compilation directives we are going to cover in this section are #ifdef, #ifndef, and #endif.
+
+Threading
+---------
+Process ,thread
+
+Thread is a single unit to execute a code .By default all the programs are single threaded
+
+Multiple threads
+-----------------
+Its a simultneous execution .
+Os is going to allocate a time share btw each thread.Time sharing is not in our control.It works based on time sharing.
+Max utiliztion of the CPU resources.
+
+
+
+C#
+---
+It a programming language comes in the .NET framework.It is used to create the windows standalone application.
+
+It is a class objected oriented programming language.We going to write the program inside the class.
+
+There is a constructor with same name of class has to define inside the class.The constructor is used to initialize the 
+variables and data's inside the class.With the constructor programmer going to define an object or create an instance 
+of the class.
+
+If we dont create the constructor explicitly by default framework will create one with one
+
+Function overloading/overiding for the polymorphism
+---------------------------------------------------
+Function overloading is a feature to give different inputs to the same method
+With the function overloading we can give different number,type and sequence and different same method multiple
+times.
+The return type of the overloading functions will remain same.
+The overloading functions can written in the same class or the inherited child class
+When writing an overloading function in the iherited class there is no need for permission.
+With this overloading feature we can implement the polymorpism .
+
+Class parentClass
+{
+   public parentClass()
+   public method1()
+   public method1(string a1)
+   {
+   }
+   public method2()
+}
+
+Class childClass : public parentClass
+{
+  
+}
+
+Overiding is a feature that allows the child class to rewrite the parents class function.This overiding is only between the parent and child
+So parent class will give a permission then child class can overide and rewrite the function
+
+
+Class parentClass
+{
+
+public virual void test1()
+{
+cw("Hi im parent class")
+}
+
+
+}
+
+
+Class childClass : parentClass
+{
+
+public  overide void test1()
+{
+cw("Hi im child class")
+}
+
+}
+
+
+

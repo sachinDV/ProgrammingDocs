@@ -1,0 +1,360 @@
+node
+-----
+Backend language for the web dv.This liberate the JS from browser.Nodejs+Express framework help in the server langauage
+
+Express
+--------
+The Express help you t0 write less repeatitive code
+import express with app fun
+Start the port with listen
+
+Handling Req and Response
+-------------------------
+localhost:port is the root of any application or website
+When localhost:port a req send to server.
+
+When browser get touch with server
+first parameter is location , the 
+
+app.get("/",function(req,res)
+{
+res.send("Hi")
+})
+
+
+The internet
+-------------
+Browser -> ISP -> DNS -> Server machine
+
+Websites actually work
+----------------------
+the data we get from server are these files => html(structure),css(style) and js(behaviour, do things)
+
+
+codepen.io, devdocs.io/html/element/a
+The anatomy of html tag
+------------------------
+<h>, <hr>, <br> 
+<Element attributes> content</Element>
+
+HTML personal Site
+------------------
+internet archive shows how app looks in past years
+
+HTML  boliler plate
+--------------------
+PersonelSite/index.html
+tell browser to render the index.html
+head is the part of html
+meta element charset transfer the data into utf8, mojibake 
+
+Structure Text in html
+-----------------------
+
+
+HTML list
+---------
+<ul>
+ <li> </li>
+
+
+Lot of host GoDady,bluehost
+Free solution 
+
+CSS
+---
+tags are the attributes
+Style language
+Cascading Style Sheet
+
+Inline CSS
+----------
+
+Inline is in same element tag, another one in same file and other in separate file,
+through link tag <> can set to the file
+
+The css can be debug through developer tool > Elements(style window) and  developer tool > Console
+
+The anatomy of css
+-------------------
+Selector {property:value}
+tag selectors, class selectors
+
+CSS Selector
+------------
+differentiate all of our different html elements
+
+HTML Div
+---------
+
+Every single html in screen is treated as a box
+Box model
+Css box model in > Element > Style
+
+Box model
+---------
+The element can be 
+{border-width:0px 10px 20px 30px;}
+{padding:20px;}
+{Margin:10px;}
+Margin,Border and padding at the end of the day is box model.
+
+CSS Display property
+---------------------
+Block
+Inline
+Inline-Block
+None
+
+The box around the images are upto images but 
+Block Elements are : H1 to H6,Divs, P,Forms, List(Takes full width )
+
+
+Inline: Spans, Images, Anchor
+
+property
+
+Display:Inline, Block, Inline-Block and None
+
+CSS Static and Relative Positioning
+------------------------------------
+Default rules how render
+
+1.Inline: Content is everything
+Block: Height is Content, Width 100%
+
+2.Order comes from code
+
+3.Children sit on top of parents
+ 
+Position
+--------
+Static 
+Relative
+Absolute
+Fixed
+
+img{
+position: relative,
+left:20px
+}
+
+Css Absolute Positioning
+------------------------
+
+Fonts/Font-family
+-----------------
+
+Float and clear 
+---------------
+
+
+Bootstrap
+==========
+Its a front end library
+It makes responsive in front end. Responsive meaning adaptive view
+Check bootstrap site document
+
+Installing the bootstrap
+------------------------
+CDN
+
+Wireframing
+------------
+Before designing , a low fidality rrepresentation of design  is wireframe
+Mockup - High fidelaity
+uipattern.com
+dribbles.com
+sneakpeekit.com
+balsamiq.cloud
+
+
+Bootstrap Navigation bar
+--------------------------
+
+
+
+Adding JS to website
+---------------------
+Inline javascript
+
+
+<body onload="alert('Hello');">
+    <h1>Hello</h1>
+    
+  </body>
+
+Internal javascript
+
+<body>
+    <h1>Hello</h1>
+    <script type="text/javascript">
+      alert("Hello");
+    </script>
+  </body>
+
+
+Always keep the script of js right at the end of body tag
+
+Select and manuplate html element
+
+
+Document Object model
+---------------------
+
+It is represented in tree model, Everything is considered as object
+It has properties and methods
+
+Selecting HTML with JS
+-----------------------
+document.getelementTag, getelementbyClass, getelementbyId
+document.queryselectorAll[""]
+document.queryselector["li a"].style.color = red
+
+Separation of concern
+---------------------
+Adding classes to the query selector
+Removing classes to the query selector
+ 
+
+
+
+JQuery
+======
+Javascript library is JQuery
+The DOM and JS is lengty and clumpsy
+an eg in JS is 
+for(i=0; i< document.queryselectorAll("button").length; i++)
+{
+   document.querySelectorAll("button")[i].addEventListener("Click", function()
+{
+document.querySelector("h1").Style.color = red;
+});
+}
+
+$("button").click(function()
+{
+  $("h1").css("color", "red");
+})
+
+$("h1") same as document.querySelector("h1")
+
+
+
+How to incoperate JS
+--------------------
+Use google cdn for jquery library in developers.google.com
+<body>
+  <script src="https://ajax.googleapi./jquerymin.js"></script>
+ 
+</body>
+
+In Index
+$(documenr).ready(function()
+{
+   $("h1").css("color", "red");
+}
+
+
+or else keep the jquery at the end of the website i.e, body
+
+Selecting Elements with Jquery
+------------------------------
+
+$("h1");
+
+$("button");
+
+No difference in selecting in one or many
+
+Manipulating style with Jquery
+------------------------------
+$("h1").css("color", "green"));
+$("h1").addClass("big-title");
+.removeClass("")
+.hasClass("")
+
+Manipulate the text
+--------------------
+
+
+
+EJS
+====
+""Documentations are like relatives, it is hard to maintain but it is always there for you"" hahaha...
+
+Template: Why do we need a template?
+------------------------------------
+Create a basic server framework with expreess, body-parser
+res.send() we can send back to the cloud.
+We can send a string, html tags etc
+
+"Documentations are 
+
+Also res.send() consider as final send 
+
+When we need to send a html file to the client via res.sendFile()
+
+Then next catch  is if we need to change the html for different condition , we need to create that much of html files in the server dir
+This would be a pain.So we need to find a way to change certain things  in an html change when logic changes
+
+Here template comes into picture:We need html template where we can change certain part of an html depend on the logic in the server .
+
+Create your first EJS
+---------------------
+Embedded JS  templating
+Go to ejs documentation and start reading ejs with expresss
+app.set('view engine', 'ejs')  
+There should be view folder inside that list.ejs should be there
+Then in app set the middleware file like 
+app.set("view engine", "ejs");
+
+The rendering of the template can be done via 
+res.render("list", { kindOfday: day }); 
+Running code inside the EJS template
+------------------------------------
+Scriptlet tag allow to take js into the ejs template 
+It is represented as <% %>
+This needs to be done in each line of js added to EJS.This is for control flow purpose.
+Why scriptlet allow control flow purpose is most of your logic will be in server files
+Only when you need to change the content (html) Then use sriptlet
+Try to do logic in server side.Dont abuse the ejs much :)
+
+Passing the data from your webpage to your server
+-------------------------------------------------
+Create a list and also create a form.
+From the form entered value add to the list
+So the value entered should go to the server
+so in the form element , the method should be "post" and the action should be "/" homeroute(So that it goes to server app.get("/")
+After post "/" is set the 
+
+When user add new item in the form input, that get saved under the name , then it is posted to home route and from it grab hold the new item from the name variable
+for body.variablename
+
+Then redirect to the home route by res.redirect("/") 
+then send the render list
+
+The concept of Scope in the 	Context of JS
+---------------------------------------------
+var , let and const 
+
+inside function all three are localhost
+inside if , else , while , for  let and const are local, but var can be global
+
+Adding Pre-made CSS style sheet
+--------------------------------
+
+
+Added a stylesheet in css folder and attache to the ejs  via <link tag
+Express wont serve all the files in the project.Infact it only serves the main app.js in package.json,Also serves the views folder.Everything it ignore
+In a server based web app.The static files should be explicity served by server 
+Usualy dev will create a folder called public, in that dev place all the static files like css, images, etc etc
+app.use(express.static("public")
+ 
+
+
+
+
+
+
+

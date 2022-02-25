@@ -1,0 +1,11 @@
+Setup and Workflow
+Get a basic running app
+Template and Static content
+Setting up and using Database
+Create a basic CRUD applicaton
+Deploy to Heroku
+
+env
+
+Anything we do and Install for python will be in the environment.It wont be global
+ 
