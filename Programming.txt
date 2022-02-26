@@ -412,7 +412,7 @@ With the function overloading we can give different number,type and sequence and
 times.
 The return type of the overloading functions will remain same.
 The overloading functions can written in the same class or the inherited child class
-When writing an overloading function in the iherited class there is no need for permission.
+When writing an overloading function in the inherited class there is no need for permission.
 With this overloading feature we can implement the polymorpism .
 
 Class parentClass
@@ -457,4 +457,37 @@ cw("Hi im child class")
 }
 
 
+
+Static type is used for keeping a local variable holding outof scope
+
+For a static varible helps in de
+
+1.To access a global variable when there is a local variable with same name:
+2.To define a function outside a class.
+3.To access a class’s static variables.
+4.In case of multiple Inheritance:
+
+
+Pass by value go for copy of the parameters passed
+pass by reference , variable itself send to the function, by sending the address of variable 
+
+
+
+In C++, we implement encapsulation via access specifiers. Typically, all member variables of the class are 
+made private (hiding the implementation details), and most member functions are made public (exposing an interface for the user). Although requiring users of the class to use the public interface may seem more burdensome than providing public access to the member variables directly, doing so actually 
+provides a large number of useful benefits that help encourage class re-usability and maintainability.
+
+When a member function is called, how does C++ keep track of which object it was called on?”. The answer is that C++ utilizes a hidden pointer named “this”
+
+C++ provides a way to separate the “declaration” portion of the class from the “implementation” portion. 
+
+To do so, simply define the member functions of the class as if they were normal functions, but prefix the class name to the function using the scope resolution operator (::) 
+
+Although you can access static members through objects of the class (as shown with first.s_value and second.s_value in the example above), it turns out that static members exist even if no objects of the class have been instantiated! Much like global variables, they are created when the program starts, and destroyed when the program ends.
+
+Consequently, it is better to think of static members as belonging to the class itself, not to the objects of the class. Because s_value exists independently of any class objects, it can be accessed directly using the class name and the scope resolution operator (in this case, Something::s_value):
+
+If the static member variables are public, we can access them directly using the class name and the scope resolution operator
+
+f the static member variables are private,It turns out that we can also make functions static.Like static member variables, static member functions are not attached to any particular object
 
