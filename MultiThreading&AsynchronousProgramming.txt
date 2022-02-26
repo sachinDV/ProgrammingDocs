@@ -1,0 +1,542 @@
+Introduction to Multithreading
+==============================
+Concepts:
+--------
+Asynchrony
+Multithreading
+Parallel Computing
+Concurrency
+
+Thread, process and what they share
+
+Main Concept:
+-------------
+Asynchrony: occurrence of events independet of the main program flow.
+Concurrency : Handle task all are in program
+Parallel Computing
+
+Thread : A thread of executio is the smallest sequence of programmed instruction 
+that can be managed independently by a scheduler, which is typically a part of the opersatinf system
+Thead is a component of a process
+
+Threads and Related Notions
+---------------------------
+Any program you launch on the OS get hosted in container called process.The main aim of a process is to isolate program 
+from each other
+
+Thread are independent units which isolates sets of instruction from each other.Threads has its own local storage called TLS.
+Any thread can exist only witin a particular process.
+One process can spawn many threads
+
+The threads have to reused.Unlike killing and starting a new one.Reuse the thread
+Thread pool is a storage of threads.
+Threads have to be scheduled by some sort of mechanism i.e, thread scheduler
+
+Process can have different priorities
+there 6 process prorities and 7 thread priorities
+.NET api's related to thres nd proces allow user to set a priority
+
+Each thread gets its own stack
+The default stack size is 1 MB
+
+
+Why Asyn programming is important
+---------------------------------
+make application reliable
+Make user, customers and developers happier
+Application faster
+deals tons of data
+Many modern api's already been writteb as async
+
+
+There is a dedicated thread for processing events  UI thread 
+
+Problems  related to multithreading
+-----------------------------------
+
+properly design app full of multithreading
+Harder to understand
+Easier to introduce error
+
+
+THREAD API, THREAD POOL, APM & EAP.
+===================================
+Outline
+========
+How to start a process, change the priority and kill a process
+Api of old school thread class
+The relation of thread and very old COM technology
+Thread pool 
+Two type of thread pool : Worker & I/O
+I/O bound operation in details
+APM(Asynchronous Programming Model) & EAP(Event-based Asynchronous Pattern)
+
+
+
+Create Process
+==============
+	Process.Start("notepad.exe", filepath)
+	Process.Start()
+        var app = new Process()
+app.startInfo.FileName()
+app.startInfo.Arguments()
+app.Start()
+app.PriorityClass()
+
+You can verify the priority in the task manager
+
+Process.GetProcess() -> static method 
+Kill the process .kill()
+
+Starting a thread.
+=================
+var t1 = new Thread()
+t1.start();
+
+Cancelling a thread
+===================
+The thread cannot stop from other thread
+
+
+Co-ordinating Threads
+=====================
+Cordination methods are 
+join() method 
+background thread
+background thread
+
+t1.isbackground = true;
+
+Threading and COM
+=================
+
+How threadpool works
+====================
+Threads are not free from memory consumption
+It is expensive to create and kill
+
+
+Worker and I/O Threads
+======================
+
+Thread pool
+-----------
+2 types = worker and I/O thread
+worker is CPU boud and 
+It is managed by CLR
+TP manages thread wisely
+
+Threadpool.QueueUserWorkItem(WaitCallback callback)
+ 
+
+
+
+EVENT & DELEGATE
+----------------
+Events
+------
+A Mechanism for communicating btw objs:Something happend in obj it can notify others
+Used in bulding lossely coupled applications
+Helps extending application
+
+A contract is needed btw a publisher and subscribers, a specfic signature
+
+Event handler public void OnVideoEncoder(object source, EventArgs e)
+{
+
+}
+
+A video encoder knows nothing about mail services, how it knows, there is where delegated come in 
+Delegates
+---------
+Agreement btw Pulisher and subscriber
+Determine the signature of the event handler method 
+
+Define a delegate
+Define an event based on the delegate
+Raise the event
+
+#Define a delgate
+public delegate void videoEncodedEventHandler(object source, EventArgs )
+
+#Define an event 
+public event VideoEncodedEventHandler VideoEncoded;
+We defined an event based on delegate
+
+To raise the event.To raise an event we neeed the method to responsibile for tht
+
+protected virtual void OnVideoEncoded()
+{
+ 
+}
+
+The message will subscribe all the subscribers, start with checking any subscribers
+
+protected virtual void OnVideoEncoded()
+{
+  if(VideoEncoded != null)
+  {
+     VideoEncoded(this, EventArgs.Empty)
+     //Parameters source of event/who is publishing the event : current class
+     //any argument : 
+  }
+}
+
+Public class MailService
+{
+   public void OnVideoEncoded(object source, EventArgs e)
+   {
+   }
+}
+
+
+How to so  subscription
+// publisher              += subscriber 
+videoEncode.VideoEncoded += mailservice.OnVideoEncoded;
+
+
+
+Raise the event in the publisher 
+
+Event handler in the subscriber
+
+How to subscribe
+
+PublisherObjct.Event +=(Register) SubscriberObjct.EventHandler
+
+So instead of delegate can write,
+
+public event EventHandler<VideoEventArgs> VideoEncoded;
+
+
+Task
+----
+What is a Task & How to create one?
+States of a task
+Cancel task
+Chaining task
+Waiting for task
+Creating an I/O bound task
+Handle an exception
+Nested and Child task
+Using taskCompletionSource
+
+What is a task?Starting a task?
+--------------------------------
+The essential concept of a TPL is concept of task.
+Task  represents async unit of work.An activity that is ongoing when main thread execution continues...
+
+Task.Run(() => Print())
+Task.Run(() => Print())
+
+
+Task.Factory.StartNew(() => Print(), CancellationToken.None,TaskCreationOption.DenyChildAttach, TaskScheduler.Default)
+Task.Factory.StartNew(() => Print())
+
+
+Run() simple and straightforward, Startnew gives more controls,For debug process
+
+Pass an argument use lambada expressing
+
+Primitive values and obj can be send to a task
+
+How to return a value from a task, The thread api didnt much on it.So we have to pass an object to task and fill in the object
+
+The start new methods returns a task 
+
+Where are the thread comes ? mostly from threadpool
+CurrentThread.IsThreadPoolThread
+Task<int> t1 = Task.Factory.StartNew(() => Print())
+It will run in a separate OS thread if TaskCreatinOptions.LongRunning.Is threadpool will be false
+
+TaskStates
+----------
+Every Task instance goes through a lifecycle
+TaskStatus ts = task.Status
+
+States:
+Created - after constructing
+WaitingForActivation
+WaitingToRun
+Running
+WaitingForChildrenToComplete
+RanToCompletion
+Canceled
+Faulted
+
+
+Cancelling a task
+-----------------
+Thread.Abort is not a way go
+There is no gaurantee for the state of obj while aborting
+
+Co-operative cancellation is required : both sides have to aware of cancellation(Client and Server)
+
+All participation of task should co-operation.
+
+Sometimes cancellation is diffult or even impossile(especially if the calleee is cancellation agnostic)
+TaskCancellationSource.Token is used for cancelling
+var cts = new CancellationTokenSource()
+
+t1 = Task.Run(print(true,cts.token), cts.token)
+
+
+So to the method and task taskcancellation will be send 
+cts.Cancel()
+
+t1.Result
+t1.Status
+
+alternative check is 
+(cts.token).ThrowIfCancellationRequested()
+
+2 threads running one print even number and odd numbers
+parentCts = new CancellationTokenSource();
+childCts = CancellationTokenSource.CreateLinkedTokenSource(parentCts.Token)
+
+t1 = Task.Run(print(true,parentcts.token), parentcts.token)
+t2 = Task.Run(print(false,childCts .token), childCts .token)
+
+If parentCts  cancel it cancel both, if childCts it cancel only child i.e, odd number print.The eve number print will complete
+Instead of sleep
+parntCts.CancelAfter(10)
+
+
+Chaining Task
+--------------
+Need to run the one task fter other
+You can do the thread.sleep but its a blocking call.
+What you need to start a task after one task without a blocking call
+
+eg odd number printing after even number
+
+t1 = Task.Run(print(true,cts.token), cts.token)
+t1.ContinueWith(prevTask => 
+{
+cw(prevTask.Result)
+t2 = Task.Run(print(false,cts .token), cts .token)
+}
+ 
+Complete and success then only it moves to the next 
+TaskContinuationOptions.onlyOnFaulted - used for unhandled exception
+TaskContinuationOptions.onlyOnRanToCompletion - used for graceful exit
+
+Task.Factory.ContinueWhenAll(new)
+
+Waiting for a Task
+------------------
+Wait for one task
+cw("Started t1")
+t1.Wait()
+Cw("Finished t1")
+
+Wait for list of task
+cw("Started t1")
+cw("Started t2")
+Task.WaitAll(t1,t2)
+Cw("Finished t1")
+Cw("Finished t2")
+
+
+
+Tread Synchronization 
+======================
+Lock , Monitor, Manual Reset event, Auto Reset event, mutex and semaphore
+Multiple threads accessing a method same time is possible
+Dont want to access the method by multiple threads at same time, called as critical section
+Can be file reading, network related process
+
+Lock
+-----
+The simplest way is lock(), The lock expects an object which is used to lock, so create a private object.This can be of any type
+
+private static object _locker = new object();
+
+
+fun()
+{
+lock(_locker)
+{
+  statement
+}
+}
+
+The simplest way to sync thread
+
+Monitor
+-------
+
+fun()
+{
+ Monitoe.Enter(_locker);
+   statement
+ Monitor.Exit(_locker)
+}
+
+With Monitor exception handlinf is fine
+
+Manual Reset Event
+------------------
+In the same file when 2 thread access the different fun
+ 
+ManualResetEvent mre = new ManualResetEvent(false);
+new thread(Write).Start();
+
+for(int i=0; i<5; i++)
+{
+  new thread(Read).Start();
+}
+
+public static Write()
+{
+ cw("Thread and No")
+ mre.Reset()
+ Thread.sleep(5000)
+ cw(Write completed)
+ mre.Set()
+}
+
+public static Read()
+{
+ cw("Thread and No")
+ mre.WaitOne()
+ Thread.sleep(5000)
+ cw(Read completed)
+}
+
+When write going on in one thread, if you dont want other thread to access the read
+Use manual reset event
+
+Because of long write operation thread, the read thread can access the Read fast.Because we
+set WaitOne(), it will check the current signal state.If it is Reset() then it wont progress
+Else it will progress in the case of set
+
+based on the Reset and Set signal
+
+
+Auto Reset Event
+-----------------
+
+This can be used to control multiple threads accessiing same fun
+
+AutoResetEvent _are = new AutoResetEvent(true);
+
+for(int i=0; i<5; i++)
+{
+   new thread(Write).Start();
+}
+
+
+Write()
+{
+  are.Waitone()
+  Write()
+  are.Set()
+}
+
+Mutex
+------
+
+Mutex _mut = new Mutex(true);
+
+for(int i=0; i<5; i++)
+{
+   new thread(Write).Start();
+}
+
+
+Write()
+{
+  _mut.Waitone()
+  Write()
+  mut.ReleaseMutex()
+}
+
+If thread start a lock only that thread has the permission to unlock it.If anyother thread
+try to unlock it it will throws an exception(Thats not the case of auto reset event)
+
+Semaphore
+---------
+Unlike others its not a locking system, its a signalling system.
+static Semaphore _sema = new Semaphore(1,1)
+
+Similar like Mutex.The arguments is where you can set the number of threads accessed at same time
+
+ 
+
+Updating WinForms controls from background threads is not allowed as it can cause many issues -- not the least of which is that the thread we're running on does not have a message pump running
+
+Without the message pump, the update of the property (which happens via a Windows message), would never be processed in this thread. If you've written code like this before in .NET Framework 1.x, you didn't get this exception. It's a new exception introduced in 2.0 to help you identify this scenario of cross-thread operations.
+So now we need to somehow get the textbox update to be performed on the main thread. WinForms helps us out by providing an "Invoke" method on all Control-derived classes which will take a delegate and will marshal that delegate to the main thread (where our message pump is).
+https://visualstudiomagazine.com/articles/2010/11/18/multithreading-in-winforms.aspx?m=1
+
+
+
+
+
+
+
+protected void CommandGetData()
+        {
+         
+            while (true)
+            {
+                
+
+                if (command != null)
+                {
+                    try
+                    {
+                        ProcessCommand(command);
+			_applicationModule.CameraModule.GetData(dataBuffer, ref Index, ref zeroPayload);
+                        OnFrameData(new CapturedDataEventArgs(dataBuffer));
+	             }
+                    catch (Exception ex)
+                    {
+                        
+                    }
+                    
+                    System.Windows.Forms.Application.DoEvents();
+                    System.Threading.Thread.Sleep(0);
+                }
+
+                
+            }
+
+
+
+private void source_DataCaptured(Object sender, CapturedFrameEventArgs e)
+        {
+
+          lock (_pendingInvokedEventLock)
+            {
+                if (InvokeRequired || _pendingDataCaptured > 0)
+                {
+                    _pendingFrameCaptured++;
+                    if (_pendingFrameCaptured == 1)
+                    {
+                        BeginInvoke(new EventHandler<EventArgs>(source_InvokedDataCaptured), new Object[] { sender, EventArgs.Empty });
+                    }
+                }
+                
+            }
+        }
+
+
+
+private void source_InvokedDataCaptured(Object sender, EventArgs e)
+        {
+            lock (_pendingInvokedEventLock)
+            {
+                _pendingFrameCaptured = 0;
+                if (sender == _source)
+                {
+                   
+                    
+                    //Update the UI controls
+                    UpdateDataCaptured(captureData);
+                }
+                //Application.DoEvents();
+            }
+
+        }

@@ -1,0 +1,764 @@
+Classes:
+Its a 
+Data and attributes
+instance member , 
+
+Class
+=======
+Usage of Static memebers
+-------------------------
+Concept that are singleton
+DateTime.Now
+Console.WriteLine() 
+
+public class Person
+{
+  public static int pplCnt = 0;
+}
+
+Create a person object from string
+
+Static method help in 
+Static method can access straight from class
+
+Constructor
+============
+Initialize, put an early state for an obj
+
+Constructor Overloading
+-----------------------
+overloaded constructor with same constructor name and different parameter.
+Inside class if we declare the list of object then you must declare 
+The list inside class should be initialize the inside class.Not outside
+public Customer (int d):this()
+{
+}
+not a good practice, 
+
+
+Object Initializer
+==================
+avoid Multiple constructor creation
+var customer= new Customer{ Id = "id", Name = "name"};
+
+Methods
+=======
+* Signature of methods
+-----------------------
+=>Name , Number, type of parameters.
+
+
+* Method Overloading
+-------------------
+=>same name with different signatures
+
+
+* Parameter modifier
+--------------------
+public Class Add(params int[] number)     
+
+* Ref modifier
+-------------
+ref return values with parameter
+
+* Out modifier
+---------------
+out return multiple values with parameters
+
+
+Fields
+======
+its data declared in class/ variable
+
+
+Data/variable/field can initialize inside class
+
+readonly field =>  only assigned once(for safety and robustness)
+
+Access Modifiers:
+=================
+
+public , private,protected, internal, protected interal
+
+Way to control its access to class and its members
+
+Encapsulation
+-------------
+Use private access modifier.
+
+
+Pascal - class name and Method 
+camel - data , private data start with _variablename
+
+Objs are about behaviour, there fields are internal and implementation matter.
+
+Follow obj should hide implementation detail and show what they can do.
+
+Properties
+===========
+
+Getter and setter with less code
+
+ASSOCIATION BTW CLASSES
+ ======================
+-------------------------
+
+Class Coupling
+==============
+
+A measure of how interconnected classes and subsystems are.
+A software contains lot of classes packaged inside lot of namespaces and assemblies
+Tightly coupled app means lot of interconnection
+
+How we make a loosely coupled app:
+
+Encapsulation : Remember a restaurant each has its own job, no one knows the details of others work.
+The relationship btw classes : 2 relationship => inheritance and composition
+Interfaces: help in designing loose coupled application
+
+
+Inheritance:
+============
+?Relationship btw 2 classes , that allows one to inherit the code from others
+is a 
+i20 is a car
+
+Benefits : Code re-use,polymorphic behaviour
+
+public class PresentationObject
+{
+//Common shared code
+} 
+
+public class Text: PresentationObject
+{
+ // Code specific to text
+}
+
+Composition
+===========
+? Relation btw 2 classes, that allows one to contain the other
+has a 
+Car has an Engine
+
+Benefits: Code re-use, flexibility and means to loose-coupling
+
+DbMigrator is a class, installer is a class, Both requires logging.So create a class for logging.
+The both class has a relationship that is called composition.
+
+For composition we dont have any syntax like a inheritance.The related class is simply a private field in composite class
+
+public class Installer
+{
+  private Logger _logger;
+  private Installer(Logger logger)
+  {
+    _logger = logger;
+  }
+}
+
+
+Favour Composition over inheritance
+===================================
+Inheritance favours tightly coupled and composition favours lossely coupled.
+
+Cons of inheritance
+------------------
+Easily abused by amateur designer/developer
+
+
+
+INHERITANCE - SECOND PILLAR OF OOPS:
+===================================
+------------------------------------
+
+Access Modifier:
+================
+The mataphor often used to explain OOP is blackbox
+Black Box :
+
+Design a class like a black box.Internal implementation is revealed then it is riskier when we going to change the class
+
+Ex a DVD player : What we see outside is some public interface.ie, very few.
+
+public : can access anywhere
+
+private : Can access from that class 
+
+protected: from that class or derived classes
+
+Avoid protected use maximum private, because you are revealing the internal implementation to your derived class.
+
+internal : internal access modifier is for class, not for the members.Can access the class from the same assembly.
+
+protected internal: is accessibile from that assembly
+
+
+In Class Library we create DLL's and reference for prjcts .
+This is for the new assembly.
+
+Once after new library created use in main project by add in the reference by selecting solutions.And by "Using Library"
+
+
+Constructor and Inheritance
+============================
+Base class constructors are always executed first
+Base class constructors are not inherited
+
+Vechile class & Car class
+
+public class Vechile
+{
+private int _registrationNumber;
+	public Vechile(registrationNumber)
+{
+   _registrationNumber = registrationNumber;
+}
+
+
+public class Car:Vechile
+{
+public Car(tring registrationNumber):base(registrationNumber)
+{
+}
+
+}
+
+reg no. cant be accessed from car class because its a implementtion details of base class i.e, vechile
+class whch we need to encapsulate the in base class
+Here protected is not a good idea.Use base call method that means in the car constructor call base method that is vechle call only
+
+If base class has a private data , from inherited class constructor send the data via childconstructor(string data):base(data) method 
+
+
+UpCasting /Downcasting
+======================
+base and inheritance 
+
+When you have a base and derived classs
+There are situations you need to convert an object to  base or derived references
+The coversion from derived class to base class: Upcasting
+	base class to derived class: downcastig
+
+
+as and is keywords
+
+Circle circle = new Circle()
+Shape shape = circle  => Upcasting 
+
+both circle and shape have references to the same object.
+
+
+Circle anotherCircle = (Circle)shape => Downcasting
+Whats the use of object object reference to the base class reference which leads to the polymorphism
+
+Car car = (Car) shape =>invalid
+prevent this happening
+Car car = obj as Car; => no exception,onlt null comes, here "car" is class reference
+is keyword help to check
+if(obj is Car)
+{
+ Car car= (Car) obj
+}
+
+Both this text and shape objs pointing to the same memory i.e, references to the same memory
+FileStream
+
+Object is the parent of all classes in the .NET frame
+
+Shape shape =new Text();
+in shape referece cant assess the Text methods so need to downcast
+Text text = (Text) shape;
+
+One real time downcast example is in WPF button click
+
+This has an object private void Button_Click(object sender,RoutedEventArgs e)
+{
+// the sender is the object source i.e a button.But cant see  the any button properties/methods.Can only see the 
+methods of object class so here you need to downcast
+ie,
+var button = (Button) sender
+if you not sure about downcast use 
+sender as Button
+if(button != null)
+{
+ // now cn acess button.
+}
+Upcast is implicit
+Can simply convert object reference to base class reference.
+
+BOXING and UNBOXING
+===================
+
+Types in c#
+Value type and Reference Type
+Value types are stored in the stack.when app running a limited amout of memeory is alloted for a thread of prgm.
+These are primitive types, Struct.They have limited life time.Out of scope they would be kicked out
+
+Reference types are stored in heap.ex's are any classed. Object,Array, string etc
+
+As we know upcast is simple any obj can implicit to base class	
+Also we know The Object class is the base of all classes in .NET framework.
+
+Circle circle = new Circle();
+Shape shape = circle;
+Object shape = circle; 
+
+The process of converting a value type instance to an object reference 
+
+int number = 10;
+object obj = number 
+//or
+object obj =  10
+What happen is the value get boxed by CLR, and stored in heap.
+So CLR creates object in the heap and reference in the stack that points to an object
+
+Unboxing is opposite 
+object obj = 10
+int number = (int) obj 
+} 
+
+if you use a clas which has a method accept argument of object class, then if you send value then boxing happens
+
+POLYMORPHISM:THE THIRD PILLAR
+============================= 	 
+
+Method Overriding
+=================
+The method overiding is modifying the implementation of an inherited method.
+
+public class Shape()
+{
+  public int width {get; set;}
+  public int height {get; set;}
+  
+  public virtual void Draw()
+{
+}
+} 
+
+
+public class Circle:Shape
+{
+ public overide void Draw()
+{
+
+//Bt default visual studio add the base class Draw method here.Base is reference to parent class.You can pass execution to base class here i you want
+
+base.Draw()
+}
+}
+
+public class Rectangel:Shape
+{
+ public overide void Draw()
+{
+
+//Bt default visual studio add the base class Draw method here.Base is reference to parent class.You can pass execution to base class here i you want
+
+base.Draw()
+}
+}
+
+public Class canvas
+{
+ public void DrawShapes(List<Shapes> shapes)
+{
+      foreach(var shape in shapes)
+{
+shape.Draw()
+}
+}
+}
+
+Polymorphism helps in creating loosely coupled code.The canvas , the Shape , the Rectangle class has no effect when add a triangle class as part of polymorphism
+Also class wont get fatty
+
+ABSTRACT ClASSES and MEMBERS
+============================
+Abstract Modifier:
+Indicates that a classs or a member is missing implementation
+In a shape class we cannot implement a Draw().The implmentation is abstract there
+
+public abstract class Shape
+{
+ public abstract void Draw()
+ 
+}
+
+With this above implementation with public class Shape implementation is missing please do implemenation with other classes(derived class)
+
+then derived classes and methods needs to implement by overide method
+
+Abstract Classes and Method
+================
+Dont not include implementation
+If memeber is declared as abstract the containing needs to be declared as abstract too
+In the derived class must implement all abstract memebers in the base abstract class
+Abstract classes cant be instatiated.It wont compile
+
+why you need abstract?
+To provide a common behaviour, while forcing other developers to follow your design
+
+The class stream is abstract, FileStream and memoryStream is not that abstract
+
+Sealed Class and Members
+======================== 
+Opposite of abstrct classes.Prevents derivation of classes or overiding of methods.
+If apply to class it prevents derivation of classes.If apply to method prevents overiding of methods
+Ex of sealed class is .NET class is string.We cannot inherit from string class
+
+
+INTERFACES
+==========
+---------
+What is Interface?
+A language construct that is similar to a class(in terms of synatax) but is fundamentally different
+
+All interface start with I
+
+public Interface ITaxCalculator
+{
+    int calculate();
+}
+
+No implementation,
+no access modifier, it doesnt have body
+
+Why we need interface? To build loosely-coupled application.An application whose components are loosely coupled
+
+
+Interface and Testability
+=========================
+Orderprocessor 
+Interfaces and testability?
+
+What is unit testing? Its a part of automation testing practice.It is write code to test the code
+Order and shipping calculator, here we are going for unit test the order but a composition of shipping is 
+present inside.So use interface or create an interface.This interface simply defines a class should provide
+How to declare and implement interfaces?
+public interface iShippingCalculator
+{
+ float CalculateShipping(Order order);
+}
+
+public class ShippingCalculator: IshippingCalculator
+{
+   public float CalculatoeShipping(Order order)
+   {
+    
+   }
+}
+
+
+It is not inhertence, shipping calculator implement IShippingCalcultor
+To test a class which is depend on the a concrete class, make an interface for the concrete class.
+So that with isolation that class can be  tested.
+
+Some tips in unit test:
+name of the file: classToTest.unittest
+
+Attributes can be [TestMethod], [ExpectedException()]
+MethodName : MethodName_condition_expectation
+Assert.IsTrue(), Assert.AreEqual()
+
+Interfaces and extensibility
+------------------------------
+
+In an ideal world we have to change the behaviour without changing the code.It is possible by extensibility
+In practical everychange can be done with a extensible mechanism
+
+DependencyInjector: It is shown below, the class where extensiblility need inject the interface
+
+
+In the class where extensibility needed, in the constructor we are using interface 
+
+public class DBMigrator
+{
+ private readonly ILogger _logger;
+ public DbMigrator(ILogger logger)
+ {
+   _logger = logger 
+ }
+}
+
+InTERFACE asking us to implement the method not to consume.
+A class can inherit multiple inheritance, cant inherit the multiple class bcs it causes the ambiquity
+Interface contains just methods without access modifiers.The methods are similar like abstract methods.But not need 
+explicitly need a abstract keyword
+No implementation is there for interfce methods, it is only for implemeation in derived classes
+
+
+
+JS OOPS
+------
+It is a programming style and paradigmn
+4 pillar - > encapsulation, abstraction, inheritance, polymorphism
+spagetti code
+"The best functions are those with no parameters
+
+Objects
+------
+creating objects
+---------------
+{} - object literal syntax, an obj in js is collection of key-value pair
+
+const circle = { radius:1, loation:{x:1,y:1},draw:function(){console.log('draw');}
+
+there are 2 properties and 1 method in circle object
+This is obj creation with literal.There are other methods to create obj, that will be discussed below
+
+
+Factories and Constructors
+--------------------------
+//Factory function
+function createCircle(radius)
+{
+  return { radius:radius, draw:function(){console.log()}}
+}
+This we call a factory function.
+
+const circle = createCircle(5);
+
+// Constructor function
+
+function Circle(radius)
+{
+   this.radius = radius;
+   this.draw = function(){
+   console.log('draw');
+}
+}
+
+const another = new Circle(1)
+3 things happen in above statement first it will create an empty obj, then set all the values to the obj and then it returns the obj
+Factories vs Constructor
+
+Constructor property
+Functions are obj, Every obj in js has a constructor property
+function.call({}, parameter)  ~ like new function(parameters)
+function.apply({},[parameter]) ~ like new function(parameters)
+
+
+
+
+
+Primitives and Reference Types
+-------------------------------
+value types is primitives(number,string, bool,null) and reference types(Object, function and array)
+
+x= 10
+y= x
+x=20
+
+print x is 20
+print y is 10
+The data type is value based only value gets saved
+
+
+x= {value:10}
+y= x
+x.value =20
+
+print x is 20
+print y is 20
+When we take an object it is not stored in the variable.but it is saved in the memory
+and the address of that memorylocation is saved inside that variable
+So when we copy x to y, it is the address/reference is been copied
+other words both x and y are pointing to same addresss in  memeory
+Primities are copied by value
+Objects are copied by their address/ reference
+
+
+Working with Properties
+----------------------
+adding or removing properties
+
+The properties of obj can be changed in fly/update the properties of obj when the obj reaches from client to server(ex).
+This can be done because there is not concept of class here, so that we dont need to define early
+  to the earlier object of circle we can add like
+circle.location = {x:1}
+circle['location'] = {x:1}
+
+Enumerating Properties in obj
+----------------------
+for(let key in circle)
+{
+ console.log(key, circle[key]);
+}
+Object.key(circle)
+if('radius' in circle)
+
+Abstraction
+------------
+Hide the details and complexity and show the essentials
+If a function of complex logic is exposed to outside world, then if there is any change in function need to change from outside world too
+Those things need to be hide from the outside world
+
+
+
+
+
+Private Properties
+
+private properties(How to implement the abstraction)
+-------------------
+replace this keyword with let
+
+function Circle()
+{
+ let defaultLocation = {x:0, y:0};
+ let radius = 1;
+}
+
+Getters /Setters
+----------------
+
+Earlier we created private memebers of circle obj.Then how to access the memebers
+create a function and return value is one way
+
+Object.DefinePropert(this, "",
+
+get = function()
+
+{
+}
+
+set = function()
+{
+}
+
+Prototypes
+-----------
+Inheritance
+-----------
+Enables an obj to taken on prop and method od another obj
+Shape
+ComputeOptiumLocation
+ - > 
+Circle and Square
+Shape is Base/Super/Parent
+Circle , squre is a derived/sub/Child class
+
+Circle "is a " Shape
+Clasical vs prototypical inheritance
+JS we dont have classes, only have objects
+
+Prototype and prototypical inheritance
+----------------------------------------
+Circle and shape object
+Add all commaon behavious with shape object
+Prototype is the parent .
+Every object we create from JS directly/indirectly inherits from objectbase
+Objectbase is the parent or base of all object in JS 
+x={}
+y={}
+both has _prot__ property
+
+x and y reference same objectbase
+Object.getPrototypeOf(x) === Object.getPrototypeOf(y)
+   true
+x.__proto__ == y.__proto__ 
+
+
+Multi-level inheritance 
+------------------------
+The local array inheritance from basearray inheritance 
+
+Property Descriptor
+--------------------
+IN js properties the attribute attached to that, sometimes attribute stop enumrate the property
+Object.getOwnProprtyDescriptor(objectbase, 'tostring')
+
+Object.defineproperty(person, 'name' 
+{
+get:
+set:
+})
+By default Writable, Enumerable and configurable
+
+Constructor Prototype
+----------------------
+Object.getPrototypeOf() is same as myobj.__proto__
+What it returns is the parent of object
+
+function Circle()
+{
+ this.radius = radius
+}
+
+
+Circle.prototype again same as Object.getPrototypeOf() or myobj.__proto__
+
+Prototype vs Instance memeber
+-----------------------------
+function Circle()
+{
+ this.radius = radius
+ function draw()
+ {
+  console.log
+ }
+}
+If we have 100 objects created from a constructor, lot of memory is required 
+Then comes what is prototypical inheritance
+First Js look into the object itself, from there it looks to prototype 
+c1 = new Circle(1)
+
+Circle.prototype ==== c1.__proto__
+
+
+
+Circle.Prototype.draw = function()
+{
+  console.log()
+}
+
+Then we dont need in instance 
+function Circle()
+{
+ this.radius = radius
+ }
+	
+	
+	
+	//Instance members and prototype members
+	
+	The prototype members can be called from the instance 
+	and instance members can be alled from prototype
+	
+	
+Iterating Properties
+--------------------
+Instance and prototype member or property
+obj.hasOwnProperty() will set true for instance members or properties
+
+Object.Key() ony returns instance members
+for in will give both instance and prototype
+
+
+Avoid Extend the built in Objects 
+---------------------------------
+
+Builtin objects dont add the properties
+
+Dont modify the objects you dont own
+It is  a dynamic object that doesnt mean you have to overide
+
+
+Prototypical Inheritence
+------------------------
+
+
+Creating your own Prototypical Inheritence
+------------------------------------------
+
+Circle.prototype = Object.create(Shape.prototype);
+
+Resetting the constructor
+
+
+
+
+ 
+

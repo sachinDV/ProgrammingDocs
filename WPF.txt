@@ -1,0 +1,257 @@
+How WPF Works
+C# files
+--------
+Peforms logic
+Respond to interaction
+
+Xaml files
+-----------
+Intract with user
+create animation 
+
+.NET Core and .NET Framework
+----------------------------
+
+XAML
+=====
+
+
+XAML
+----
+
+The language allow to deine UI definition i.e, XAML
+Extensible Application Markup Language
+Opening and closing tag <page> <BUtton Text="Save"/></page>
+The code behind file: A C# file with the same name
+* Linked through class definition
+* XAML and c# both  definr the same partial class
+
+The versatality of XAML?
+It has been got to language for .NET UI
+Even works for Android and IOS
+Powerful UI animation
+
+
+The XAML Syntax
+---------------
+
+
+Improving the UI with resource and styles
+=========================================
+
+Styling XAML controls
+----------------------
+<Button x:Name="equalButton"
+background= "Orange"
+forgrounf = "white"
+Content="="
+Margin = "5"
+Grid.Row= "5"
+Grid.Column="3"/>
+
+The repeating copy of style to all button takes time, how to do in an efficent way?
+
+
+Xaml Static resource
+--------------------
+Static resources wll allow us to use certain values through out the elements
+
+
+<Window.Resource>
+  <SolidColorBrush x:Key="numbersColor" Color="#44444"/>
+  
+</Window.Resource>
+
+Background="{StaticResource numbersColor}"	
+
+Application-Wide Resource
+-------------------------
+Open the App.xaml file, there define the resources
+<Application.Resources>
+  <SolidColorBrush x:Key="numbersColor" Color="#44444"/>
+</Application.Resources>
+
+Implicit Styles
+---------------
+This applied to all target type in application
+This resource is not going to be solid color brush, string or number itd style
+<Application.Resources>
+  <SolidColorBrush x:Key="numbersColor" Color="#44444"/>
+  <Style TargetTypes="Button">
+     <Setter Property="Foreground" Value="White"/>
+     <Setter Property="FontSize" Value="25"/>
+</Application.Resources>
+
+
+Explicit Styles
+----------------
+In App.xaml
+<Application.Resources>
+<SolidColorBrush x:Key="numbersColor" Color="#33333"/>
+<SolidColorBrush x:Key="operatorColor" Color="Green"/>
+
+
+<Style TargetType="Button" x:Key="numberButtonStyle">
+     <Setter Property="Foreground" Value ="White"/>
+     <Setter Property ="Background" Value = "{StaticResource numbersColor}"/>
+</Style>
+
+<Style TargetType="Button" x:Key="OperatorsButtonStyle">
+     <Setter Property ="Background" Value = "{StaticResource operatorColor}"
+</Style>
+</Application.Resources>
+
+
+In MainWindow.xaml
+
+<Button x:Name = "sevenButton"
+        Style="{StaticResource numberButtonStyle}"
+        Content="7"
+        Grid.Row ="2"/>
+
+<Button x:Name = "sevenButton"
+        Style="{StaticResource operatorButtonStyle}"
+        Content="7"
+        Grid.Row ="2"/>
+
+
+
+LIST VIEW
+==========
+They have created a data base now going to display to UI
+Defining a List View
+--------------------
+Intro Databinding:
+-----------------
+Object(Source)<------->Binding<-------->UI Control(Target)
+
+
+
+LISTVIEW
+=========
+
+Using an ItemTemplate
+----------------------
+<stackpanel>
+   <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+   <TextBlock Text="{Binding Email}" FontWeight="Bold"/>
+
+</stackpanel>
+
+
+Filtering a list
+----------------
+
+DataBinding
+-----------
+Data from where data coming - source
+The property to which bind data - target
+target property is alwasy dependency property
+
+
+<Stackpanel>
+           <Slider Name="MySlider" Minimum ="0" Maximum="100"/>
+           <TextBox Name = "MyTxt" Width="50" Text="{Binding ElementName=mySlidder, path=Value, Mode=Oneway}"
+<Stackpanel> 
+
+Text is the dependency property bcs its target
+Source is slidder 
+
+CUSTOM USER CONTROLS
+====================
+
+Create a custom control
+-----------------------
+Create a new folder > Controls
+Right click folder > Add > usercontrols create name eg:UserControl
+We can set properties in the UserControl.cs like a stackpanel,Grid
+
+Add property to the user custom control
+
+UserControl.cs
+
+public partial class ContactControl:UserControl
+{
+
+   private Contact contact;
+   public Contact Contact
+   {
+     get{return contact}
+     set{contact = value}
+   }
+
+}
+
+To the MainWindow.xaml add the name space
+xmlns:uc="path"
+
+Now keep the user control in tree
+<uc:ContactControl allstandardproperty Contact="{Binding}/>
+
+But error occurs here Cannot bind to Contact proprty bcs it is not a dependency property
+
+Binding to a Custom Control
+----------------------------
+
+Use code snippet propfdp
+
+public Contact Contact
+        {
+            get { return (Contact)GetValue(ContactProperty); }
+            set { SetValue(ContactProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ContactProperty =
+            DependencyProperty.Register("Contact", typeof(Contact), typeof(ContactControl), new PropertyMetadata(0));
+
+This is entire def of dependency property, which enable styling and binding
+
+Its not basic getter and setter, its going to binding tht diff inpts the one setting .
+Currently we are able to bind.We no longer have the functionality to set the value
+Propertymetadata helps to set the data
+
+
+The middleware implementation starting with connection of board and Analog output section.- 3 weeks(includes study part of project and WPF).
+Analog input section, capture waveform, profiles and waveform UI design implementation(if required) - 2 weeks
+
+
+MVVM
+----
+The pattern Natural to Xaml application
+
+
+
+Animations:
+----------
+Blend for Visual Studio - Integrated Design Environment
+Like visual studio for windows app, expression studio is meant for web dev
+
+So blend was integrated with expression studio
+Now it comes as a part of visual studio
+
+Wht to use Blend for VS
+
+1.All things design => UI creation, Style Creation, Gradients
+2.All things animation => Controls, keyframes and player
+3.All things binding 
+
+Exploring blend
+---------------
+Open blend like visual studio
+
+It has SE, Assets,state and trigger
+
+Storyboard and Keyframes
+--------------------------
+storyboard helps in animation
+Changing color of button, moving button,change it size
+The storyboard contain what an element do, or its properties changes when animation done
+ANimations are created as resources in xaml 
+Create story board objects and timeline panel, Select the button > click the storyboard  with Name(Key)
+
+Recording starts
+
+
+Trigger the animation
+----------------------
